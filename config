@@ -1,0 +1,4 @@
+#!/bin/bash
+FANDAL=work/a8_fandal_cz
+ATRDIR=work/16M/
+MYPICO=MyPicoDos406S1
