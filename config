@@ -1,6 +1,8 @@
 #!/bin/bash
-FANDAL=work/a8_fandal_cz
+#SRCDIR=work/a8_fandal_cz*/Binaries # Fandal archive
+SRCDIR=work/Homesoft*Collection     # Homesoft collection
 ATRDIR=work/16M/
 MYPICO=MyPicoDos406S1
+DEFTYPE=Mixed               # Default disk type (Games/Demos/Rasta/...) for the 16MB image
 MAXSIZE=16360               # Max disk size
 FMAX=62                     # Max files per directory

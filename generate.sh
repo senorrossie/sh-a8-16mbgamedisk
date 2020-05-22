@@ -7,9 +7,10 @@
 source config 2>/dev/null
 
 # Defaults if unset
-FANDAL=${FANDAL:-"work/a8_fandal_cz"}
+SRCDIR=${SRCDIR:-"work/a8_fandal_cz\*/Binaries"}
 ATRDIR=${ATRDIR:-"work/16M/"}
-MYPICO=${NYPICO:-"MyPicoDos406S1"}
+MYPICO=${MYPICO:-"MyPicoDos406S1"}
+DEFTYPE=${DEFTYPE:-"MIXED"}
 let MAXSIZE=${MAXSIZE:-16360}
 let FMAX=${FMAX:-62}
 
@@ -22,9 +23,9 @@ let TF=0            # Total size
 OLDIFS=$IFS
 
 # Sanity check
-if [ '$( ls -1 "${FANDAL}*" )' == '' ]; then
-    printf "Unable to locate the fandal archive in %s*!" "${FANDAL}"
-    printf "You can manually download and extract it (an archiver that works is 7zip) to the work directory.\n"
+if [ '$( ls -1 "${SRCDIR}*" )' == '' ]; then
+    printf "Unable to locate the source directory %s*!" "${SRCDIR}"
+    printf "HINT: You can manually download for example the fandal archive and extract it (an archiver that works with the fandal archive is 7zip) to the work directory.\n"
     exit 1
 fi
 if [ ! -e "${ATRDIR}" ]; then 
@@ -45,7 +46,7 @@ function prep_disks() {
     XTRA=""
 
     IFS=$'\n'
-    for BIN in `find ${SDIR} -type f -name "*.xex" | sort -n`; do
+    for BIN in `find ${SDIR} -type f -name "*.[Xx][Ee][Xx]" | sort -n`; do
         let N++
         let DE++
 
@@ -118,16 +119,27 @@ function gen_disks() {
 }
 
 ### Main
-for TYPE in GAME DEMO; do
-    case $TYPE in
-        GAME)
-            SDIR="${FANDAL}*/Binaries/Games"
+for SUB in `ls -d ${SRCDIR}/*`; do
+    # If there are subdirectories in the source directory, treat them as 'Type'.
+    # Fandal uses directories for demos and games
+    TYPE=${SUB##*/}
+    TYPE=${TYPE^^}
+    case ${TYPE} in
+        GAM*)
+            # Fandal specific ?
+            SDIR="${SUB}"
             ;;
-        DEMO)
-            SDIR="${FANDAL}*/Binaries/Demos"
+        DEM*)
+            # Fandal specific ?
+            SDIR="${SUB}"
+            ;;
+        *)
+            TYPE="${DEFTYPE^^}"
+            SDIR="${SRCDIR}"
             ;;
     esac
-    printf "Processing Fandal's %s collection in %s* (Destination: %s)...\n" "${TYPE}" "${SDIR}" "$ATRDIR"
+
+    printf "Processing %s collection in %s (Destination: %s)...\n" "${TYPE}" "${SDIR}" "$ATRDIR"
     prep_disks
     printf "\nCreated %s atr image directories, with %s files. Total size: %s\n\n" "$TD" "$TF" "$TS"
 done
