@@ -2,7 +2,8 @@
 # ---------
 #
 # Script that copies the fandal and homesoft archives to the fat space of a CF card named ATARI
-OLDIFS=$IFS
+# Want to change the destination? Modify the CFMOUNT value in the script, or supply a value on the commandline, eg:
+#  CFMOUNT="/media/user/MYCFCARD" ./copy2cf.sh
 
 function do_Fandal() {
 	for TYPE in Binaries Images; do
@@ -66,12 +67,12 @@ function do_Homesoft() {
 }
 
 ### Main
-SBASE="../work/a8_fandal_cz_april_2020"
-CFMOUNT=${CFMOUNT:-"/media/$USER/ATARI"}
+SBASE="../work/a8_fandal_*"
+CFMOUNT=${CFMOUNT:-"../media/ATARI"}
 IFS=$'\n'
 do_Fandal
 
 SBASE="../work/Homesoft Collection"
-CFMOUNT=${CFMOUNT:-"/media/$USER/ATARI"}
+CFMOUNT=${CFMOUNT:-"../media/ATARI"}
 IFS=$'\n'
 do_Homesoft
