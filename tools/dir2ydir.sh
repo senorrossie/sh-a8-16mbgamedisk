@@ -16,5 +16,5 @@ while IFS=$';' read -r src dst; do
     fi
     #printf "%s. cp -a '%s' '%s'\n" "$FY" "$src" "$dst"
     cp -a "${src}" "${OUTDIR}/${dst}"
-done < <( find "${SRCDIR}" -type f -name "*.[XxCc][EeAa][XxRr]" -printf "%p;%TY/%f\n" )
+done < <( find "${SRCDIR}" -type f -name "*.[XxCcAa][EeAaTt][XxRr]" -printf "%p;%TY/%f\n" )
 printf " ... DONE!\n"
