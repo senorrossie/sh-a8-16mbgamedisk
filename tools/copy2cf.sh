@@ -67,12 +67,12 @@ function do_Homesoft() {
 }
 
 ### Main
-SBASE="../work/a8_fandal_*"
+SBASE=${SBASE:-"../work/a8_fandal_*"}
 CFMOUNT=${CFMOUNT:-"../media/ATARI"}
 IFS=$'\n'
 do_Fandal
 
-SBASE="../work/Homesoft Collection"
+SBASE=${SBASE:-"../work/Homesoft Collection"}
 CFMOUNT=${CFMOUNT:-"../media/ATARI"}
 IFS=$'\n'
 do_Homesoft
