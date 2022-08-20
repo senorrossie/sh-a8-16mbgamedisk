@@ -1,6 +1,6 @@
 #!/bin/bash
 #----------
-# Generate alphabetical directories for the .XEX/.CAR files in current directory (and move files there).
+# Generate alphabetical directories for the .ATR/.XEX/.CAR files in current directory (and move files there).
 printf "Processing... "
 while IFS= read -r -d $'\0' FILE; do
     LETTER=${FILE##*/}
@@ -14,5 +14,5 @@ while IFS= read -r -d $'\0' FILE; do
     printf "%s " "${LETTER^}"
     #echo "mv \"${FILE}\" \"${LETTER^}\""
     mv "${FILE}" "${LETTER^}"
-done < <( find . -type f -name "*.[XxCc][EeAa][XxRr]" -print0 | sort -zn )
+done < <( find . -type f -name "*.[AaXxCc][TtEeAa][XxRr]" -print0 | sort -zn )
 printf " ... DONE!\n"
